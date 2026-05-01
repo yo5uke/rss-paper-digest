@@ -1,0 +1,42 @@
+name: Paper Digest
+
+on:
+  schedule:
+    # config.yaml で設定した頻度に合わせて cron を変更してください。
+    # デフォルト: 月曜・木曜 08:00 JST (= 日曜・水曜 23:00 UTC)
+    - cron: "0 23 * * 0,3"
+  workflow_dispatch: # 手動実行
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # output/ と seen_urls.json をコミット・プッシュするため
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          version: "latest"
+
+      - name: Set up Python 3.12
+        run: uv python install 3.12
+
+      - name: Install dependencies
+        run: uv sync
+
+      - name: Run paper digest
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: uv run python main.py
+
+      - name: Commit and push digest
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add output/ seen_urls.json
+          git diff --cached --quiet || git commit -m "chore: digest $(date +%Y-%m-%d)"
+          git push

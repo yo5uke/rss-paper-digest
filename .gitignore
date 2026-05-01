@@ -1,0 +1,22 @@
+# 環境変数・シークレット
+.env
+
+# 処理済みURLの記録
+seen_urls.json
+
+# Python キャッシュ
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+
+# uv
+.venv/
+
+# エディタ
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

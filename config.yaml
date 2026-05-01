@@ -1,0 +1,50 @@
+# ============================================================
+# rss-paper-digest 設定ファイル
+#
+# 使い方:
+#   実行前にこのファイルを編集し、保存してください。
+# ============================================================
+
+# ── 各フィードから取得する最大論文数 ─────────────────────────────────────
+max_papers_per_feed: 10
+
+# ── 使用する Claude モデル ────────────────────────────────────────────────
+# 通常は変更不要です。
+model: "claude-sonnet-4-6"
+
+# ── RSSフィードURL一覧 ────────────────────────────────────────────────────
+# URLを追加・削除するだけでカスタマイズできます。
+# 主な形式: Atom, RSS 2.0, RSS 1.0 に対応しています。
+#
+# 例（経済学系ジャーナル）:
+# - "https://rss.sciencedirect.com/publication/science/00472727"  # J. of Public Economics
+# - "https://back.nber.org/rss/new.xml"                           # NBER Working Papers
+#
+# 例（自然科学系）:
+# - "https://www.nature.com/nature.rss"
+# - "https://www.science.org/rss/news_current.xml"
+feeds:
+  - "https://rss.sciencedirect.com/publication/science/00472727"
+  - "https://rss.sciencedirect.com/publication/science/01660462"
+  - "https://www.journals.uchicago.edu/action/showFeed?type=etoc&feed=rss&jc=jole"
+  - "https://rss.sciencedirect.com/publication/science/00487333"
+  - "https://onlinelibrary.wiley.com/action/showFeed?jc=15206688&type=etoc&feed=rss"
+
+# ── 研究関心 ─────────────────────────────────────────────────────────────
+# スコアリングの基準となるテキストです。
+# 自分の研究関心・業務領域に合わせて自由に書き換えてください。
+# 具体的なキーワードや手法名を含めるとスコアの精度が上がります。
+#
+# 採点基準:
+#   5 = 非常に高い関連性（必読）
+#   4 = 高い関連性
+#   3 = ある程度の関連性
+#   2 = 低い関連性
+#   1 = ほぼ関連なし
+research_interests: |
+  ここに自分の研究関心・業務領域を自由に記述してください。
+
+  例:
+  - 関心のある研究分野や手法
+  - よく使う分析手法のキーワード
+  - 関心の薄い分野（スコアを下げたい場合に明示すると有効）
