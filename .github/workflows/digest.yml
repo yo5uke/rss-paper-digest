@@ -9,6 +9,7 @@ on:
 
 jobs:
   digest:
+    if: ${{ secrets.ANTHROPIC_API_KEY != '' }}
     runs-on: ubuntu-latest
     permissions:
       contents: write # output/ と seen_urls.json をコミット・プッシュするため
