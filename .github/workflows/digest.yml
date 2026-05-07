@@ -8,8 +8,20 @@ on:
   workflow_dispatch: # 手動実行
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    outputs:
+      has_key: ${{ steps.check.outputs.has_key }}
+    steps:
+      - id: check
+        env:
+          KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          [ -n "$KEY" ] && echo "has_key=true" >> $GITHUB_OUTPUT || echo "has_key=false" >> $GITHUB_OUTPUT
+
   digest:
-    if: ${{ secrets.ANTHROPIC_API_KEY != '' }}
+    needs: check
+    if: needs.check.outputs.has_key == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write # output/ と seen_urls.json をコミット・プッシュするため
